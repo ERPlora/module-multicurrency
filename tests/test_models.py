@@ -206,9 +206,10 @@ class TestExchangeRateHistory:
             hub_id=hub_id, currency=usd_currency,
             rate=Decimal('1.085000'), source='manual',
         )
-        assert ExchangeRateHistory.all_objects.filter(currency=usd_currency).count() >= 1
+        currency_pk = usd_currency.pk
+        assert ExchangeRateHistory.all_objects.filter(currency_id=currency_pk).count() >= 1
         usd_currency.delete(hard_delete=True)
-        assert ExchangeRateHistory.all_objects.filter(currency=usd_currency).count() == 0
+        assert ExchangeRateHistory.all_objects.filter(currency_id=currency_pk).count() == 0
 
     def test_rate_precision(self, hub_id, usd_currency):
         """Rate supports 6 decimal places."""
