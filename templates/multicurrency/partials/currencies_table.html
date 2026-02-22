@@ -1,0 +1,84 @@
+{% load i18n djicons %}
+
+{% if currencies %}
+<div class="card">
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans "Code" %}</th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Symbol" %}</th>
+                    <th class="text-right">{% trans "Exchange Rate" %}</th>
+                    <th>{% trans "Decimals" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Last Updated" %}</th>
+                    <th class="text-right">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for currency in currencies %}
+                <tr>
+                    <td class="font-semibold font-mono">{{ currency.code }}</td>
+                    <td>{{ currency.name }}</td>
+                    <td>{{ currency.symbol }}</td>
+                    <td class="text-right font-mono">{{ currency.exchange_rate }}</td>
+                    <td>{{ currency.decimal_places }}</td>
+                    <td>
+                        {% if currency.is_active %}
+                            <span class="badge color-success">{% trans "Active" %}</span>
+                        {% else %}
+                            <span class="badge">{% trans "Inactive" %}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-sm opacity-70">
+                        {% if currency.last_updated %}
+                            {{ currency.last_updated|timesince }} {% trans "ago" %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-1">
+                            <button class="btn btn-ghost btn-sm"
+                                    hx-get="{% url 'multicurrency:currency_edit' currency.pk %}"
+                                    hx-target="#main-content-area"
+                                    hx-push-url="true"
+                                    title="{% trans 'Edit' %}">
+                                {% icon "create-outline" %}
+                            </button>
+                            <button class="btn btn-ghost btn-sm"
+                                    hx-post="{% url 'multicurrency:currency_toggle' currency.pk %}"
+                                    hx-target="#datatable-body"
+                                    hx-swap="innerHTML"
+                                    title="{% if currency.is_active %}{% trans 'Deactivate' %}{% else %}{% trans 'Activate' %}{% endif %}">
+                                {% if currency.is_active %}
+                                    {% icon "eye-off-outline" %}
+                                {% else %}
+                                    {% icon "eye-outline" %}
+                                {% endif %}
+                            </button>
+                            <button class="btn btn-ghost btn-sm color-error"
+                                    hx-post="{% url 'multicurrency:currency_delete' currency.pk %}"
+                                    hx-target="#datatable-body"
+                                    hx-swap="innerHTML"
+                                    hx-confirm="{% trans 'Are you sure you want to delete this currency?' %}"
+                                    title="{% trans 'Delete' %}">
+                                {% icon "trash-outline" %}
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body text-center py-8">
+        {% icon "cash-outline" css_class="text-4xl opacity-30 mb-2" %}
+        <p class="opacity-70">{% trans "No currencies configured yet." %}</p>
+    </div>
+</div>
+{% endif %}

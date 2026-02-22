@@ -1,0 +1,21 @@
+{% load i18n djicons %}
+
+<div class="space-y-4">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold">{% trans "Currencies" %}</h2>
+        <button class="btn color-primary"
+                hx-get="{% url 'multicurrency:currency_create' %}"
+                hx-target="#main-content-area"
+                hx-push-url="true">
+            {% icon "add-outline" %} {% trans "Add Currency" %}
+        </button>
+    </div>
+
+    <!-- Currencies Table -->
+    <div id="datatable-body">
+        {% include "multicurrency/partials/currencies_table.html" %}
+    </div>
+
+</div>

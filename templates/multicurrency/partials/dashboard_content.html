@@ -1,0 +1,128 @@
+{% load i18n djicons %}
+
+<div class="space-y-4" x-data="{ updating: false }">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-xl font-semibold">{% trans "Exchange Rates" %}</h2>
+            <p class="text-sm opacity-70">{% trans "Base currency" %}: <strong>{{ settings.base_currency }}</strong></p>
+        </div>
+        <button class="btn color-primary"
+                :disabled="updating"
+                @click="updating = true"
+                hx-post="{% url 'multicurrency:update_rates' %}"
+                hx-target="#main-content-area"
+                hx-swap="innerHTML"
+                hx-on::after-request="updating = false">
+            <span x-show="!updating">{% icon "refresh-outline" %} {% trans "Update Rates" %}</span>
+            <span x-show="updating" class="loading loading-sm"></span>
+        </button>
+    </div>
+
+    <!-- Rates Table -->
+    {% if currencies %}
+    <div class="card">
+        <div class="overflow-x-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Currency" %}</th>
+                        <th>{% trans "Symbol" %}</th>
+                        <th class="text-right">{% trans "Rate" %}</th>
+                        <th class="text-right">{% trans "1 base =" %}</th>
+                        <th>{% trans "Last Updated" %}</th>
+                        <th>{% trans "Status" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for currency in currencies %}
+                    <tr>
+                        <td>
+                            <div>
+                                <span class="font-semibold">{{ currency.code }}</span>
+                                <span class="text-sm opacity-70 ml-1">{{ currency.name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ currency.symbol }}</td>
+                        <td class="text-right font-mono">{{ currency.exchange_rate }}</td>
+                        <td class="text-right font-mono">
+                            1 {{ settings.base_currency }} = {{ currency.exchange_rate }} {{ currency.code }}
+                        </td>
+                        <td class="text-sm opacity-70">
+                            {% if currency.last_updated %}
+                                {{ currency.last_updated|timesince }} {% trans "ago" %}
+                            {% else %}
+                                <span class="opacity-50">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if currency.is_active %}
+                                <span class="badge color-success">{% trans "Active" %}</span>
+                            {% else %}
+                                <span class="badge">{% trans "Inactive" %}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="card">
+        <div class="card-body text-center py-8">
+            {% icon "cash-outline" css_class="text-4xl opacity-30 mb-2" %}
+            <p class="opacity-70">{% trans "No currencies configured yet." %}</p>
+            <button class="btn color-primary mt-4"
+                    hx-get="{% url 'multicurrency:currency_create' %}"
+                    hx-target="#main-content-area"
+                    hx-push-url="true">
+                {% icon "add-outline" %} {% trans "Add Currency" %}
+            </button>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Recent Payments -->
+    {% if recent_payments %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{% trans "Recent Foreign Currency Payments" %}</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Currency" %}</th>
+                        <th class="text-right">{% trans "Original Amount" %}</th>
+                        <th class="text-right">{% trans "Rate Used" %}</th>
+                        <th class="text-right">{% trans "Base Amount" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in recent_payments %}
+                    <tr>
+                        <td class="text-sm">{{ payment.payment_date|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if payment.currency %}
+                                {{ payment.currency.code }}
+                            {% else %}
+                                <span class="opacity-50">-</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-right font-mono">
+                            {% if payment.currency %}{{ payment.currency.symbol }}{% endif %}{{ payment.original_amount }}
+                        </td>
+                        <td class="text-right font-mono">{{ payment.exchange_rate_used }}</td>
+                        <td class="text-right font-mono">{{ payment.base_amount }} {{ settings.base_currency }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>

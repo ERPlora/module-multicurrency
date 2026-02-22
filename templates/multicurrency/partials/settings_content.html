@@ -1,0 +1,86 @@
+{% load i18n djicons %}
+
+<div class="max-w-lg mx-auto space-y-4">
+
+    <h2 class="text-xl font-semibold">{% trans "Currency Settings" %}</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <form hx-post="{% url 'multicurrency:settings_save' %}"
+                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                  hx-swap="none">
+
+                <!-- Base Currency -->
+                <div class="form-group">
+                    <label class="form-group-label" for="id_base_currency">{% trans "Base Currency" %}</label>
+                    {{ form.base_currency }}
+                    <p class="text-xs opacity-60 mt-1">{% trans "Your primary currency (e.g. EUR, USD)" %}</p>
+                </div>
+
+                <!-- Round to Decimals -->
+                <div class="form-group">
+                    <label class="form-group-label" for="id_round_to_decimals">{% trans "Round to Decimals" %}</label>
+                    {{ form.round_to_decimals }}
+                </div>
+
+                <!-- Show Both Currencies -->
+                <div class="form-group flex items-center justify-between">
+                    <div>
+                        <label class="form-group-label" for="id_show_both_currencies">{% trans "Show Both Currencies" %}</label>
+                        <p class="text-xs opacity-60">{% trans "Display base + foreign currency on receipt" %}</p>
+                    </div>
+                    {{ form.show_both_currencies }}
+                </div>
+
+                <!-- Allow Multi-Currency Payment -->
+                <div class="form-group flex items-center justify-between">
+                    <div>
+                        <label class="form-group-label" for="id_allow_multi_currency_payment">{% trans "Allow Multi-Currency Payment" %}</label>
+                        <p class="text-xs opacity-60">{% trans "Accept payments in different currencies" %}</p>
+                    </div>
+                    {{ form.allow_multi_currency_payment }}
+                </div>
+
+                <hr class="my-4">
+
+                <h3 class="font-semibold mb-3">{% trans "Auto-Update Settings" %}</h3>
+
+                <!-- Auto-update Rates -->
+                <div class="form-group flex items-center justify-between">
+                    <div>
+                        <label class="form-group-label" for="id_auto_update_rates">{% trans "Auto-update Rates" %}</label>
+                        <p class="text-xs opacity-60">{% trans "Automatically fetch exchange rates" %}</p>
+                    </div>
+                    {{ form.auto_update_rates }}
+                </div>
+
+                <!-- Update Frequency -->
+                <div class="form-group">
+                    <label class="form-group-label" for="id_update_frequency">{% trans "Update Frequency" %}</label>
+                    {{ form.update_frequency }}
+                </div>
+
+                <!-- Rate Source -->
+                <div class="form-group">
+                    <label class="form-group-label" for="id_rate_source">{% trans "Rate Source" %}</label>
+                    {{ form.rate_source }}
+                </div>
+
+                <!-- API Key -->
+                <div class="form-group">
+                    <label class="form-group-label" for="id_api_key">{% trans "API Key" %}</label>
+                    {{ form.api_key }}
+                    <p class="text-xs opacity-60 mt-1">{% trans "Required for ExchangeRate API" %}</p>
+                </div>
+
+                <div class="flex gap-2 mt-6">
+                    <button type="submit" class="btn color-primary flex-1">
+                        {% icon "save-outline" %}
+                        {% trans "Save Settings" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
