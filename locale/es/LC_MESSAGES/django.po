@@ -1,0 +1,338 @@
+# Spanish translations for Multi-Currency
+# Copyright (C) 2025
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-25 00:00+0000\n"
+"PO-Revision-Date: 2026-02-25 00:00+0000\n"
+"Last-Translator: ERPlora Team <info@erplora.com>\n"
+"Language: es\n"
+"Language-Team: Spanish\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: module.py
+msgid "Multi-Currency"
+msgstr "Multi-moneda"
+
+msgid "Multi-currency support with exchange rates for POS"
+msgstr "Soporte multi-moneda con tipos de cambio para TPV"
+
+msgid "Currencies"
+msgstr "Monedas"
+
+msgid "Exchange Rates"
+msgstr "Tipos de cambio"
+
+msgid "History"
+msgstr "Historial"
+
+msgid "Settings"
+msgstr "Configuración"
+
+#: models.py - CurrencySettings
+msgid "Hourly"
+msgstr "Cada hora"
+
+msgid "Daily"
+msgstr "Diario"
+
+msgid "Weekly"
+msgstr "Semanal"
+
+msgid "Manual"
+msgstr "Manual"
+
+msgid "European Central Bank"
+msgstr "Banco Central Europeo"
+
+msgid "ExchangeRate API"
+msgstr "ExchangeRate API"
+
+msgid "Base Currency"
+msgstr "Moneda base"
+
+msgid "ISO 4217 code for the base currency"
+msgstr "Código ISO 4217 para la moneda base"
+
+msgid "Auto-update Rates"
+msgstr "Actualización automática de tipos"
+
+msgid "Update Frequency"
+msgstr "Frecuencia de actualización"
+
+msgid "Rate Source"
+msgstr "Fuente de tipos"
+
+msgid "API Key"
+msgstr "Clave API"
+
+msgid "API key for the exchange rate provider"
+msgstr "Clave API para el proveedor de tipos de cambio"
+
+msgid "Round to Decimals"
+msgstr "Redondear a decimales"
+
+msgid "Show Both Currencies"
+msgstr "Mostrar ambas monedas"
+
+msgid "Show base + foreign currency on receipt"
+msgstr "Mostrar moneda base + extranjera en el recibo"
+
+msgid "Allow Multi-Currency Payment"
+msgstr "Permitir pago multi-moneda"
+
+msgid "Currency Settings"
+msgstr "Configuración de monedas"
+
+#: models.py - Currency
+msgid "Currency Code"
+msgstr "Código de moneda"
+
+msgid "ISO 4217 code, e.g. USD"
+msgstr "Código ISO 4217, ej. USD"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Symbol"
+msgstr "Símbolo"
+
+msgid "Decimal Places"
+msgstr "Decimales"
+
+msgid "Exchange Rate"
+msgstr "Tipo de cambio"
+
+msgid "Rate vs base currency"
+msgstr "Tipo frente a moneda base"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Last Updated"
+msgstr "Última actualización"
+
+msgid "Sort Order"
+msgstr "Orden"
+
+msgid "Currency"
+msgstr "Moneda"
+
+#: models.py - ExchangeRateHistory
+msgid "Source"
+msgstr "Fuente"
+
+msgid "manual/ecb/api"
+msgstr "manual/bce/api"
+
+msgid "Recorded At"
+msgstr "Registrado el"
+
+msgid "Exchange Rate History"
+msgstr "Historial de tipos de cambio"
+
+#: models.py - CurrencyPayment
+msgid "Sale"
+msgstr "Venta"
+
+msgid "FK to sale"
+msgstr "FK a venta"
+
+msgid "Original Amount"
+msgstr "Importe original"
+
+msgid "Amount in foreign currency"
+msgstr "Importe en moneda extranjera"
+
+msgid "Exchange Rate Used"
+msgstr "Tipo de cambio utilizado"
+
+msgid "Base Amount"
+msgstr "Importe en moneda base"
+
+msgid "Converted to base currency"
+msgstr "Convertido a moneda base"
+
+msgid "Payment Date"
+msgstr "Fecha de pago"
+
+msgid "Currency Payment"
+msgstr "Pago en moneda extranjera"
+
+msgid "Currency Payments"
+msgstr "Pagos en moneda extranjera"
+
+#: views.py
+msgid "Rate source is set to manual. Update rates manually."
+msgstr "La fuente de tipos está configurada como manual. Actualiza los tipos manualmente."
+
+msgid "Not available from ECB"
+msgstr "No disponible desde el BCE"
+
+msgid "Failed to fetch ECB rates: %(error)s"
+msgstr "Error al obtener tipos del BCE: %(error)s"
+
+msgid "API key is required for ExchangeRate API"
+msgstr "Se requiere clave API para ExchangeRate API"
+
+msgid "API returned error: %(error)s"
+msgstr "La API devolvió un error: %(error)s"
+
+msgid "Not available from API"
+msgstr "No disponible desde la API"
+
+msgid "Failed to fetch API rates: %(error)s"
+msgstr "Error al obtener tipos de la API: %(error)s"
+
+msgid "Currency created successfully"
+msgstr "Moneda creada correctamente"
+
+msgid "Currency not found"
+msgstr "Moneda no encontrada"
+
+msgid "Currency updated successfully"
+msgstr "Moneda actualizada correctamente"
+
+msgid "Cannot delete currency with existing payments"
+msgstr "No se puede eliminar una moneda con pagos existentes"
+
+msgid "Currency deleted successfully"
+msgstr "Moneda eliminada correctamente"
+
+msgid "activated"
+msgstr "activada"
+
+msgid "deactivated"
+msgstr "desactivada"
+
+msgid "Currency %(status)s successfully"
+msgstr "Moneda %(status)s correctamente"
+
+msgid "Invalid amount"
+msgstr "Importe no válido"
+
+msgid "Missing from/to parameters"
+msgstr "Faltan los parámetros de origen/destino"
+
+msgid "Currency %(code)s not found"
+msgstr "Moneda %(code)s no encontrada"
+
+#: templates
+msgid "Edit Currency"
+msgstr "Editar moneda"
+
+msgid "New Currency"
+msgstr "Nueva moneda"
+
+msgid "ISO 4217 code (e.g. USD, GBP, JPY)"
+msgstr "Código ISO 4217 (ej. USD, GBP, JPY)"
+
+msgid "Rate relative to base currency"
+msgstr "Tipo relativo a la moneda base"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Update"
+msgstr "Actualizar"
+
+msgid "Create"
+msgstr "Crear"
+
+msgid "Currency Settings"
+msgstr "Configuración de monedas"
+
+msgid "Your primary currency (e.g. EUR, USD)"
+msgstr "Tu moneda principal (ej. EUR, USD)"
+
+msgid "Display base + foreign currency on receipt"
+msgstr "Mostrar moneda base + extranjera en el recibo"
+
+msgid "Accept payments in different currencies"
+msgstr "Aceptar pagos en diferentes monedas"
+
+msgid "Auto-Update Settings"
+msgstr "Configuración de actualización automática"
+
+msgid "Automatically fetch exchange rates"
+msgstr "Obtener automáticamente los tipos de cambio"
+
+msgid "Required for ExchangeRate API"
+msgstr "Requerido para ExchangeRate API"
+
+msgid "Save Settings"
+msgstr "Guardar configuración"
+
+msgid "Rate History"
+msgstr "Historial de tipos"
+
+msgid "All Currencies"
+msgstr "Todas las monedas"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Rate"
+msgstr "Tipo"
+
+msgid "No rate history available."
+msgstr "No hay historial de tipos disponible."
+
+msgid "Add Currency"
+msgstr "Añadir moneda"
+
+msgid "Update Rates"
+msgstr "Actualizar tipos"
+
+msgid "1 base ="
+msgstr "1 base ="
+
+msgid "ago"
+msgstr "atrás"
+
+msgid "Inactive"
+msgstr "Inactivo"
+
+msgid "No currencies configured yet."
+msgstr "No hay monedas configuradas."
+
+msgid "Recent Foreign Currency Payments"
+msgstr "Pagos recientes en moneda extranjera"
+
+msgid "Rate Used"
+msgstr "Tipo utilizado"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Decimals"
+msgstr "Decimales"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Deactivate"
+msgstr "Desactivar"
+
+msgid "Activate"
+msgstr "Activar"
+
+msgid "Are you sure you want to delete this currency?"
+msgstr "¿Estás seguro de que quieres eliminar esta moneda?"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Base currency"
+msgstr "Moneda base"
