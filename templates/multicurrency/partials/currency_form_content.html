@@ -1,14 +1,9 @@
 {% load i18n djicons %}
+<div data-back-url="{% url 'multicurrency:currencies' %}" hidden></div>
 
 <div class="max-w-lg mx-auto space-y-4">
 
     <div class="flex items-center gap-2">
-        <button class="btn btn-ghost btn-sm"
-                hx-get="{% url 'multicurrency:currencies' %}"
-                hx-target="#main-content-area"
-                hx-push-url="true">
-            {% icon "arrow-back-outline" %}
-        </button>
         <h2 class="text-xl font-semibold">
             {% if currency %}
                 {% trans "Edit Currency" %}: {{ currency.code }}
