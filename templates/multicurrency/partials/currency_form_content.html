@@ -14,7 +14,11 @@
     </div>
 
     <div class="card">
-        <div class="card-body" x-data="currencyForm()">
+        <div class="card-body" x-data="{
+                submitForm(form) {
+                    // Let HTMX handle submission
+                }
+            }">
             <form @submit.prevent="submitForm($el)"
                   hx-post="{% if currency %}{% url 'multicurrency:currency_edit' currency.pk %}{% else %}{% url 'multicurrency:currency_create' %}{% endif %}"
                   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
@@ -89,13 +93,3 @@
     </div>
 
 </div>
-
-<script>
-function currencyForm() {
-    return {
-        submitForm(form) {
-            // Let HTMX handle submission
-        }
-    }
-}
-</script>
