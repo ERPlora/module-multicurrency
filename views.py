@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from django.utils import timezone
 from django.contrib import messages
 
-from apps.accounts.decorators import login_required
+from apps.accounts.decorators import login_required, permission_required
 from apps.core.htmx import htmx_view
 from apps.modules_runtime.navigation import with_module_nav
 
@@ -486,6 +486,7 @@ def api_rates(request):
 # ---------------------------------------------------------------------------
 
 @login_required
+@permission_required('multicurrency.manage_settings')
 @with_module_nav('multicurrency', 'settings')
 @htmx_view('multicurrency/pages/settings.html', 'multicurrency/partials/settings_content.html')
 def settings_view(request):
@@ -496,6 +497,7 @@ def settings_view(request):
 
 
 @login_required
+@permission_required('multicurrency.manage_settings')
 @require_POST
 def settings_save(request):
     hub = _hub(request)
