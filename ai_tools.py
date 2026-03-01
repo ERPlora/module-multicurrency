@@ -71,3 +71,77 @@ class ConvertCurrency(AssistantTool):
             "converted": str(round(converted, to_curr.decimal_places)),
             "rate": str(to_curr.exchange_rate / from_curr.exchange_rate) if from_curr.exchange_rate else None,
         }
+
+
+@register_tool
+class AddCurrency(AssistantTool):
+    name = "add_currency"
+    description = "Add a new currency with exchange rate."
+    module_id = "multicurrency"
+    required_permission = "multicurrency.add_currency"
+    requires_confirmation = True
+    parameters = {
+        "type": "object",
+        "properties": {
+            "code": {"type": "string", "description": "Currency code (e.g. USD, GBP)"},
+            "name": {"type": "string", "description": "Currency name"},
+            "symbol": {"type": "string", "description": "Currency symbol (e.g. $, £)"},
+            "exchange_rate": {"type": "string", "description": "Exchange rate relative to base currency"},
+            "decimal_places": {"type": "integer", "description": "Decimal places (default: 2)"},
+        },
+        "required": ["code", "name", "symbol", "exchange_rate"],
+        "additionalProperties": False,
+    }
+
+    def execute(self, args, request):
+        from decimal import Decimal
+        from multicurrency.models import Currency
+        c = Currency.objects.create(
+            code=args['code'].upper(),
+            name=args['name'],
+            symbol=args['symbol'],
+            exchange_rate=Decimal(args['exchange_rate']),
+            decimal_places=args.get('decimal_places', 2),
+            is_active=True,
+        )
+        return {"id": str(c.id), "code": c.code, "name": c.name, "created": True}
+
+
+@register_tool
+class UpdateExchangeRate(AssistantTool):
+    name = "update_exchange_rate"
+    description = "Update the exchange rate for a currency."
+    module_id = "multicurrency"
+    required_permission = "multicurrency.change_currency"
+    requires_confirmation = True
+    parameters = {
+        "type": "object",
+        "properties": {
+            "currency_code": {"type": "string", "description": "Currency code (e.g. USD)"},
+            "exchange_rate": {"type": "string", "description": "New exchange rate"},
+        },
+        "required": ["currency_code", "exchange_rate"],
+        "additionalProperties": False,
+    }
+
+    def execute(self, args, request):
+        from decimal import Decimal
+        from django.utils import timezone
+        from multicurrency.models import Currency
+        c = Currency.objects.get(code=args['currency_code'].upper())
+        old_rate = c.exchange_rate
+        c.exchange_rate = Decimal(args['exchange_rate'])
+        c.last_updated = timezone.now()
+        c.save(update_fields=['exchange_rate', 'last_updated'])
+        # Add history record
+        try:
+            from multicurrency.models import ExchangeRateHistory
+            ExchangeRateHistory.objects.create(
+                currency=c, rate=c.exchange_rate, source='manual',
+            )
+        except Exception:
+            pass
+        return {
+            "code": c.code, "old_rate": str(old_rate),
+            "new_rate": str(c.exchange_rate), "updated": True,
+        }
