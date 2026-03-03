@@ -31,3 +31,17 @@ PERMISSIONS = [
     'multicurrency.update_rates',
     'multicurrency.manage_settings',
 ]
+
+ROLE_PERMISSIONS = {
+    "admin": ["*"],
+    "manager": [
+        "add_currency",
+        "change_currency",
+        "update_rates",
+        "view_currency",
+    ],
+    "employee": [
+        "add_currency",
+        "view_currency",
+    ],
+}
