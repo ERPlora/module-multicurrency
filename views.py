@@ -2,7 +2,7 @@
 
 from decimal import Decimal, InvalidOperation
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render as django_render
 from django.views.decorators.http import require_POST, require_http_methods
 from django.utils.translation import gettext as _
