@@ -66,8 +66,14 @@ class CurrencySettings(HubBaseModel):
 
     @classmethod
     def get_settings(cls, hub_id):
-        obj, _ = cls.all_objects.get_or_create(hub_id=hub_id)
-        return obj
+        try:
+            return cls.all_objects.get(hub_id=hub_id)
+        except cls.DoesNotExist:
+            from django.db import IntegrityError
+            try:
+                return cls.all_objects.create(hub_id=hub_id)
+            except IntegrityError:
+                return cls.all_objects.get(hub_id=hub_id)
 
 
 # ---------------------------------------------------------------------------
